@@ -56,3 +56,23 @@ test_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
+# face detector.
+predictor_path = 'dlib/shape_predictor_5_face_landmarks.dat'
+detector = dlib.get_frontal_face_detector()
+
+# convert into ImageFolderDataset for pytorch dataloader.
+# https://pytorch.org/docs/stable/torchvision/datasets.html#torchvision.datasets.ImageFolder
+def convert(X, y, phase, attr):
+    for file_id, class_index in zip(X, y):
+        file_name = '{}.png'.format(file_id)
+        file_path = os.path.join('face_data/dataset', file_name)
+        class_path = os.path.join('output', attr, phase, str(class_index))
+        if not os.path.exists(class_path):
+            os.makedirs(class_path, exist_ok=True)
+        # remove noisy images by face detection.
+        img = dlib.load_rgb_image(file_path)
+        dets = detector(img, 1)
+        # sometimes no faces detected.
+        if len(dets) != 1:
+            continue
+        shutil.copyfile(file_path, osp.join(class_path, file_name))
