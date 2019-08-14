@@ -1,12 +1,12 @@
 # AMLSassignment
 # Required Environment:
-tensorboardX
-numpy
-torchvision
-torch
-scikit-learn
-pandas
-pillow
+tensorboardX; 
+numpy; 
+torchvision; 
+torch; 
+scikit-learn; 
+pandas; 
+pillow; 
 dlib 
 
 # Using instructions:
