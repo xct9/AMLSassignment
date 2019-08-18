@@ -1,5 +1,6 @@
 # AMLSassignment
 # Required Environment:
+Python 3; 
 tensorboardX; 
 numpy; 
 torchvision; 
